@@ -1,0 +1,34 @@
+# CodeForge AI – Framework-level configuration
+framework:
+  name: "CodeForge AI"
+  version: "1.0.0"
+  description: "Reusable Multi-Domain AI Assistant Framework"
+
+openai:
+  default_model: "nvidia/nemotron-3.5-super-vl:free"
+  base_url: "https://openrouter.ai/api/v1"
+  temperature: 0.7
+  max_tokens: 1500
+  timeout: 30
+
+nvidia:
+  base_url: "https://integrate.api.nvidia.com/v1"
+  model: "nvidia/nemotron-3.5-bolt-e4b"
+  temperature: 0.7
+  top_p: 0.95
+  max_tokens: 1024
+  timeout: 30
+
+validation:
+  max_input_length: 2000
+  min_input_length: 1
+
+applications:
+  - id: "edutrack"
+    name: "EduTrack AI"
+    description: "Education Assistant"
+    icon: "🎓"
+  - id: "healthmate"
+    name: "HealthMate AI"
+    description: "Healthcare Information Assistant"
+    icon: "🏥"

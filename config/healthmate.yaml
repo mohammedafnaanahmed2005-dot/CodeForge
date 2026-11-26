@@ -1,0 +1,53 @@
+# HealthMate AI – Domain configuration
+app:
+  id: "healthmate"
+  name: "HealthMate AI"
+  tagline: "Your Health Information Companion"
+  icon: "🏥"
+  description: >
+    HealthMate AI provides general health education, explains medical
+    terminology, helps you prepare for doctor appointments, and delivers
+    wellness information. It never diagnoses or prescribes.
+
+openai:
+  model: "nvidia/nemotron-3.5-bolt-e4b"
+  temperature: 0.4
+  max_tokens: 1024
+
+topic_categories:
+  - "Medical Terminology"
+  - "Nutrition & Diet"
+  - "Exercise & Fitness"
+  - "Mental Health & Wellness"
+  - "Chronic Condition Awareness"
+  - "Preventive Care"
+  - "Doctor Appointment Preparation"
+  - "First Aid Basics"
+  - "Medications (general information only)"
+  - "Child & Infant Health"
+
+example_questions:
+  - "What does 'hypertension' mean in plain language?"
+  - "What questions should I ask my doctor before surgery?"
+  - "What are the general symptoms of Type 2 diabetes?"
+  - "How much water should an adult drink each day?"
+  - "What is the difference between a virus and a bacterium?"
+
+safety:
+  medical_disclaimer: >
+    HealthMate AI provides general health education only. It is not a
+    substitute for professional medical advice, diagnosis, or treatment.
+    Always consult a qualified healthcare provider for personal medical
+    decisions.
+  emergency_message: >
+    If you or someone else is experiencing a medical emergency such as
+    chest pain, difficulty breathing, loss of consciousness, or severe
+    injury, please call your local emergency services immediately (e.g.
+    911, 999, 112).
+  prohibited_requests:
+    - "diagnose"
+    - "prescribe"
+    - "my medication"
+    - "am i pregnant"
+    - "do i have"
+    - "is this cancer"
