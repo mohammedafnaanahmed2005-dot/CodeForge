@@ -1,0 +1,59 @@
+# EduTrack AI – Application configuration
+app:
+  id: "edutrack"
+  name: "EduTrack AI"
+  tagline: "Your Personal Academic Assistant"
+  icon: "🎓"
+  description: >
+    EduTrack AI helps students learn effectively through personalised
+    explanations, quiz generation, study plans, and concept breakdowns.
+
+openai:
+  model: "nvidia/nemotron-3.5-bolt-e4b"
+  temperature: 0.6
+  max_tokens: 1024
+
+subjects:
+  - "Mathematics"
+  - "Physics"
+  - "Chemistry"
+  - "Biology"
+  - "Computer Science"
+  - "History"
+  - "Geography"
+  - "Literature"
+  - "Economics"
+  - "Philosophy"
+  - "General / Other"
+
+academic_levels:
+  - "Primary School"
+  - "Middle School"
+  - "High School"
+  - "Undergraduate"
+  - "Postgraduate"
+
+learning_difficulties:
+  - "No specific difficulty"
+  - "Dyslexia – prefer plain language"
+  - "ADHD – prefer concise, structured answers"
+  - "ESL – English as a second language"
+
+assistance_types:
+  - "Explain a concept"
+  - "Answer a question"
+  - "Generate a quiz"
+  - "Summarize study material"
+  - "Create a study plan"
+
+example_questions:
+  - "Explain the Pythagorean theorem with a simple example."
+  - "What caused World War I? Give me a 5-point summary."
+  - "Quiz me on 5 photosynthesis questions at high school level."
+  - "Create a 2-week study plan for my calculus exam."
+  - "Explain recursion as if I am 12 years old."
+
+safety:
+  disclaimer: >
+    EduTrack AI provides educational guidance. Always verify critical
+    information with your teacher or official course materials.

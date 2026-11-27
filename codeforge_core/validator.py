@@ -1,0 +1,51 @@
+"""
+ValidationService – validates raw user input before it reaches the AI engine.
+"""
+
+from __future__ import annotations
+
+from codeforge_core.errors import ValidationError
+
+
+class ValidationService:
+    """Validate raw user input against configurable constraints."""
+
+    DEFAULT_MAX_LENGTH = 2000
+    DEFAULT_MIN_LENGTH = 1
+
+    def __init__(
+        self,
+        max_length: int = DEFAULT_MAX_LENGTH,
+        min_length: int = DEFAULT_MIN_LENGTH,
+    ) -> None:
+        self.max_length = max_length
+        self.min_length = min_length
+
+    def validate(self, text: str) -> str:
+        """Validate *text* and return sanitised version.
+
+        Raises :class:`ValidationError` on failure.
+        """
+        if not isinstance(text, str):
+            raise ValidationError("Input must be a string.")
+
+        cleaned = text.strip()
+
+        if len(cleaned) < self.min_length:
+            raise ValidationError("Message cannot be empty.")
+
+        if len(cleaned) > self.max_length:
+            raise ValidationError(
+                f"Message is too long ({len(cleaned)} characters). "
+                f"Please keep it under {self.max_length} characters."
+            )
+
+        return cleaned
+
+    def validate_app_config(self, config: dict) -> None:
+        required_keys = ["app", "openai"]
+        missing = [k for k in required_keys if k not in config]
+        if missing:
+            raise ValidationError(
+                f"Application configuration is missing required keys: {missing}"
+            )

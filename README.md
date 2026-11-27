@@ -1,73 +1,83 @@
 # ⚡ CodeForge AI
 
 **Reusable Multi-Domain AI Assistant Framework**  
-*Kiroween Skeleton Crew Hackathon 2024*
+*Kiroween Skeleton Crew Hackathon 2026*
 
 [![Python](https://img.shields.io/badge/Python-3.11%2B-blue)](https://python.org)
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.32%2B-red)](https://streamlit.io)
-[![OpenAI](https://img.shields.io/badge/OpenAI-GPT--4o--mini-green)](https://openai.com)
-[![Tests](https://img.shields.io/badge/Tests-70%20passing-brightgreen)]()
+[![NVIDIA NIM](https://img.shields.io/badge/NVIDIA-NIM-76b900)](https://build.nvidia.com)
+[![Tests](https://img.shields.io/badge/Tests-passing-brightgreen)]()
+[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
 ---
 
 ## What Is CodeForge AI?
 
-CodeForge AI is a **modular, configuration-driven Python framework** that powers multiple independent AI applications from a **single shared core engine**.
+CodeForge AI is a **modular, configuration-driven Python framework** that powers
+multiple independent AI-assistant applications from a **single shared core**.
 
-Out of the box it ships two domain applications:
+Both domain applications use the same AI engine, validation, safety rules, and
+conversation management — with zero code duplication.
 
-| App | Domain | Purpose |
-|-----|--------|---------|
-| 🎓 **EduTrack AI** | Education | Academic assistant: explanations, quizzes, study plans |
-| 🏥 **HealthMate AI** | Healthcare | Health information: terminology, wellness, appointment prep |
-
-Switching domains changes the AI's behaviour, prompts, safety rules, and UI — without modifying the shared core.
+| App | Domain | Run command |
+|-----|--------|-------------|
+| 🎓 **EduTrack AI** | Education | `streamlit run apps/edutrack_ai/app.py` |
+| 🏥 **HealthMate AI** | Healthcare | `streamlit run apps/healthmate_ai/app.py` |
 
 ---
 
-## Project Structure
+## Repository Structure
 
 ```
-codeforge-ai/
-├── app.py                      # Streamlit entry point
-├── requirements.txt
-├── .env.example
-├── .gitignore
+CodeForge/
 │
-├── core/                       # Shared framework (never modify for new domains)
-│   ├── ai_engine.py            # OpenAI integration
-│   ├── config_manager.py       # YAML config loader
-│   ├── prompt_manager.py       # Prompt registry & assembler
-│   ├── conversation_manager.py # Isolated session history
-│   ├── validation_service.py   # Input validation
-│   ├── safety_service.py       # Domain safety rules & disclaimers
-│   ├── error_handler.py        # Exception translation
-│   └── errors.py               # Custom exceptions
+├── .kiro/                          # Kiro project specs and steering
+│   ├── specs/
+│   │   ├── architecture.md
+│   │   ├── requirements.md
+│   │   └── tasks.md
+│   ├── steering/
+│   │   └── project_context.md
+│   └── hooks/
+│       └── pre_commit.md
+│
+├── codeforge_core/                 # Shared reusable framework
+│   ├── __init__.py
+│   ├── ai_engine.py                # Multi-provider AI client
+│   ├── config_loader.py            # YAML config loader
+│   ├── prompt_manager.py           # Prompt registry & assembler
+│   ├── conversation_manager.py     # Isolated session history
+│   ├── validator.py                # Input validation
+│   ├── safety_service.py           # Domain safety rules
+│   ├── error_handler.py            # Exception translation
+│   └── errors.py                   # Custom exception types
 │
 ├── apps/
-│   ├── edutrack/               # EduTrack AI domain app
-│   │   ├── app.py
-│   │   └── prompts.py
-│   └── healthmate/             # HealthMate AI domain app
-│       ├── app.py
-│       └── prompts.py
+│   ├── edutrack_ai/                # EduTrack AI – standalone app
+│   │   ├── app.py                  # streamlit run apps/edutrack_ai/app.py
+│   │   ├── config.yaml
+│   │   └── README.md
+│   │
+│   └── healthmate_ai/              # HealthMate AI – standalone app
+│       ├── app.py                  # streamlit run apps/healthmate_ai/app.py
+│       ├── config.yaml
+│       └── README.md
 │
-├── config/
-│   ├── framework.yaml          # Framework-level settings
-│   ├── edutrack.yaml           # Education domain settings
-│   └── healthmate.yaml         # Healthcare domain settings
+├── config/                         # Shared YAML configuration
+│   ├── framework.yaml
+│   ├── edutrack.yaml
+│   └── healthmate.yaml
 │
-├── tests/                      # 70 automated tests (all mocked, no API key needed)
+├── tests/
 │   ├── test_ai_engine.py
-│   ├── test_config_manager.py
-│   ├── test_conversation_manager.py
-│   ├── test_domain_apps.py
-│   ├── test_prompt_manager.py
-│   ├── test_safety_service.py
-│   └── test_validation_service.py
+│   ├── test_edutrack.py
+│   └── test_healthmate.py
 │
-└── .streamlit/
-    └── config.toml             # Streamlit theme
+├── requirements.txt
+├── README.md
+├── LICENSE
+├── .env.example
+└── .gitignore
 ```
 
 ---
@@ -77,171 +87,113 @@ codeforge-ai/
 ### 1. Clone and install
 
 ```bash
-git clone https://github.com/your-username/codeforge-ai.git
-cd codeforge-ai
+git clone https://github.com/mohammedafnaanahmed2005-dot/CodeForge.git
+cd CodeForge
 pip install -r requirements.txt
 ```
 
-### 2. Configure your OpenAI API key
+### 2. Configure API keys
 
 ```bash
 cp .env.example .env
-# Edit .env and set:
-# OPENAI_API_KEY=sk-your-real-key-here
+# Edit .env:
+# NVIDIA_API_KEY=nvapi-your-key-here
+# OPENAI_API_KEY=sk-or-your-openrouter-key-here   (optional fallback)
 ```
 
-### 3. Run locally
+### 3. Run EduTrack AI
 
 ```bash
-streamlit run app.py
+streamlit run apps/edutrack_ai/app.py
 ```
 
-The app opens at `http://localhost:8501`.
+### 4. Run HealthMate AI
 
-### 4. Run the tests (no API key required)
+```bash
+streamlit run apps/healthmate_ai/app.py
+```
+
+### 5. Run all tests (no API key required)
 
 ```bash
 python -m pytest tests/ -v
 ```
 
-All 70 tests use mocked API responses.
+---
+
+## AI Providers
+
+| Priority | Provider | Key variable | Model |
+|----------|----------|-------------|-------|
+| 1 (primary) | NVIDIA NIM | `NVIDIA_API_KEY` | `nvidia/nemotron-3.5-bolt-e4b` |
+| 2 (fallback) | OpenRouter | `OPENAI_API_KEY` | free-tier models |
+
+The engine automatically falls back to OpenRouter if NVIDIA is unavailable or rate-limited.
 
 ---
 
-## Deployment on Streamlit Community Cloud
-
-### Step 1 — Push to GitHub
-
-```bash
-git init
-git add .
-git commit -m "feat: initial CodeForge AI implementation"
-git branch -M main
-git remote add origin https://github.com/your-username/codeforge-ai.git
-git push -u origin main
-```
-
-> **Important:** confirm `.env` is in `.gitignore` before pushing. Never commit your API key.
-
-### Step 2 — Create a Streamlit Cloud app
-
-1. Go to [share.streamlit.io](https://share.streamlit.io) and sign in with GitHub.
-2. Click **New app**.
-3. Select your repository, branch (`main`), and set the main file path to `app.py`.
-4. Click **Advanced settings → Secrets** and add:
-
-```toml
-OPENAI_API_KEY = "sk-your-real-key-here"
-```
-
-5. Click **Deploy**.
-
-Streamlit Cloud automatically installs `requirements.txt` and starts the app.
-
----
-
-## Architecture: How the Strategy Pattern Works
+## Architecture
 
 ```
-User request
-     │
-     ▼
-Streamlit UI  (app.py)
-     │  selects domain
-     ▼
-Domain App  (EduTrackApp / HealthMateApp)
-     │
-     ├─► ValidationService.validate()       ← shared
-     ├─► SafetyService.check_input()        ← domain-configured
-     ├─► PromptManager.build_system_prompt() ← domain prompt injected
-     ├─► ConversationManager.get_messages() ← isolated per app
-     └─► AIEngine.generate_response()       ← shared core
-              │
-              ▼
-         OpenAI API
+User input
+    │
+    ▼
+Streamlit app  (apps/<domain>/app.py)
+    │
+    ├── ValidationService.validate()          ← codeforge_core
+    ├── SafetyService.check_input()           ← codeforge_core
+    ├── PromptManager.build_system_prompt()   ← codeforge_core
+    ├── ConversationManager.add_message()     ← codeforge_core
+    └── AIEngine.generate_response()          ← codeforge_core
+                │
+                ▼
+         NVIDIA NIM → OpenRouter (fallback)
+                │
+                ▼
+         SafetyService.build_response_with_disclaimer()
+                │
+                ▼
+         Streamlit renders response
 ```
-
-The **AI engine never changes** regardless of domain. Domain behaviour is entirely injected through configuration, prompts, and the safety service.
 
 ---
 
 ## Adding a Third Domain Application
 
-To add, say, **LegalEase AI**:
+The core never changes. To add **LegalEase AI**:
 
-1. **Create the app package:**
-
-```
-apps/
-└── legalease/
-    ├── __init__.py
-    ├── app.py      # copy edutrack/app.py, change APP_ID and imports
-    └── prompts.py  # write your domain system prompt
-```
-
-2. **Add configuration:**
-
-```
-config/legalease.yaml
-```
-
-3. **Register the app** in `config/framework.yaml`:
-
-```yaml
-applications:
-  - id: "legalease"
-    name: "LegalEase AI"
-    description: "Legal Information Assistant"
-    icon: "⚖️"
-```
-
-4. **Add a card and route** in `app.py` (the Streamlit entry point).
-
-**Zero changes required** to the core AI engine, config manager, conversation manager, validation service, or error handler.
+1. Create `apps/legalease_ai/app.py` and `apps/legalease_ai/config.yaml`
+2. Import everything from `codeforge_core`
+3. Write a domain system prompt inside `app.py`
+4. Run: `streamlit run apps/legalease_ai/app.py`
 
 ---
 
-## Core Modules Reference
+## Deployment on Streamlit Community Cloud
 
-| Module | Responsibility |
-|--------|---------------|
-| `AIEngine` | Communicates with OpenAI; domain-agnostic |
-| `ConfigManager` | Loads and caches YAML configs; shared singleton |
-| `PromptManager` | Registry + assembler for domain system prompts |
-| `ConversationManager` | Per-session isolated message history |
-| `ValidationService` | Input length and type constraints |
-| `SafetyService` | Domain-specific blocked patterns + disclaimers |
-| `ErrorHandler` | Translates OpenAI/network exceptions to user messages |
+1. Push to GitHub (`.env` is gitignored — never committed)
+2. Go to [share.streamlit.io](https://share.streamlit.io) → **New app**
+3. Set main file path to `apps/edutrack_ai/app.py` **or** `apps/healthmate_ai/app.py`
+4. Under **Advanced settings → Secrets**, add:
 
----
+```toml
+NVIDIA_API_KEY = "nvapi-your-key"
+OPENAI_API_KEY = "sk-or-your-key"
+```
 
-## Safety Notes (HealthMate AI)
-
-HealthMate AI is configured to:
-
-- **Never** diagnose medical conditions
-- **Never** prescribe or recommend medications
-- **Always** append a medical disclaimer to every response
-- **Immediately** redirect to emergency services when crisis keywords are detected
-- **Always** recommend consulting a qualified healthcare provider
-
-These rules are enforced at the application layer (not just the prompt) so they cannot be bypassed through prompt injection.
+5. Click **Deploy**
 
 ---
 
-## Hackathon Demonstration Script
+## Safety (HealthMate AI)
 
-1. Open the app — show the **CodeForge AI dashboard** with both application cards.
-2. Click **EduTrack AI** → ask: *"Quiz me on 5 photosynthesis questions at high school level."*
-3. Change subject to **Mathematics** → ask: *"Explain the Pythagorean theorem with examples."*
-4. Go back to home → open **HealthMate AI**.
-5. Ask: *"What does hypertension mean in plain language?"*
-6. Demonstrate safety: ask *"Can you diagnose my chest pain?"* → show the safety block.
-7. Clear both conversations — show they reset independently.
-8. Run `pytest tests/ -v` in a terminal — show all 70 tests passing.
+HealthMate AI never diagnoses conditions or prescribes medication.
+Every response includes a medical disclaimer.
+Crisis keywords immediately redirect to emergency services.
+These rules are enforced in `codeforge_core.SafetyService`, not just the prompt.
 
 ---
 
 ## License
 
-MIT — free to extend, fork, and deploy.
+[MIT](LICENSE)
